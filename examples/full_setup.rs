@@ -1,6 +1,5 @@
 use bevy::prelude::*;
-use bevy_ingame_tools::{sprites, state::GameState, spritesheetbuilder::SpriteSheetBundleBuilder};
-
+use bevy_ingame_tools::{sprites, spritesheetbuilder::SpriteSheetBundleBuilder, state::GameState};
 
 #[derive(Reflect, Default)]
 pub struct Sprites {
@@ -15,16 +14,23 @@ pub fn setup(
 ) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 
-    let builder = SpriteSheetBundleBuilder::new().texture_atlas(texture_atlas_holder.texture_atlas.clone());
-    commands.spawn_bundle(builder.clone()
-        .index(sprites.tree)
-        .transform(Transform::from_xyz(0.0, 0.0, 100.0))
-        .build());
-    commands.spawn_bundle(builder.clone()
-        .index(sprites.player_south_base)
-        .transform(Transform::from_xyz(40.0, 0.0, 100.0))
-        .flip_y(true)
-        .build());
+    let builder =
+        SpriteSheetBundleBuilder::new().texture_atlas(texture_atlas_holder.texture_atlas.clone());
+    commands.spawn_bundle(
+        builder
+            .clone()
+            .index(sprites.tree)
+            .transform(Transform::from_xyz(0.0, 0.0, 100.0))
+            .build(),
+    );
+    commands.spawn_bundle(
+        builder
+            .clone()
+            .index(sprites.player_south_base)
+            .transform(Transform::from_xyz(40.0, 0.0, 100.0))
+            .flip_y(true)
+            .build(),
+    );
 }
 
 pub fn main() {
@@ -32,7 +38,6 @@ pub fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(bevy_ingame_tools::BevyIngameTools::<Sprites>::default())
         .insert_resource(Sprites::default())
-        .add_system_set(SystemSet::on_enter(GameState::Ingame)
-            .with_system(setup))
+        .add_system_set(SystemSet::on_enter(GameState::Ingame).with_system(setup))
         .run();
 }

@@ -30,8 +30,13 @@ impl SpriteSheetBundleBuilder<NoTextureAtlas, NoIndex> {
     }
 }
 
-impl<TextureAtlasParameter, IndexParameter> SpriteSheetBundleBuilder<TextureAtlasParameter, IndexParameter> {
-    pub fn texture_atlas(self, texture_atlas: Handle<TextureAtlas>) -> SpriteSheetBundleBuilder<Handle<TextureAtlas>, IndexParameter> {
+impl<TextureAtlasParameter, IndexParameter>
+    SpriteSheetBundleBuilder<TextureAtlasParameter, IndexParameter>
+{
+    pub fn texture_atlas(
+        self,
+        texture_atlas: Handle<TextureAtlas>,
+    ) -> SpriteSheetBundleBuilder<Handle<TextureAtlas>, IndexParameter> {
         SpriteSheetBundleBuilder {
             texture_atlas,
             index: self.index,
@@ -56,24 +61,15 @@ impl<TextureAtlasParameter, IndexParameter> SpriteSheetBundleBuilder<TextureAtla
     }
 
     pub fn transform(self, transform: Transform) -> Self {
-        SpriteSheetBundleBuilder {
-            transform,
-            ..self
-        }
+        SpriteSheetBundleBuilder { transform, ..self }
     }
 
     pub fn flip_x(self, flip_x: bool) -> Self {
-        SpriteSheetBundleBuilder {
-            flip_x,
-            ..self
-        }
+        SpriteSheetBundleBuilder { flip_x, ..self }
     }
 
     pub fn flip_y(self, flip_y: bool) -> Self {
-        SpriteSheetBundleBuilder {
-            flip_y,
-            ..self
-        }
+        SpriteSheetBundleBuilder { flip_y, ..self }
     }
 
     pub fn custom_size(self, custom_size: impl Into<Option<Vec2>>) -> Self {
@@ -84,10 +80,7 @@ impl<TextureAtlasParameter, IndexParameter> SpriteSheetBundleBuilder<TextureAtla
     }
 
     pub fn color(self, color: Color) -> Self {
-        SpriteSheetBundleBuilder {
-            color,
-            ..self
-        }
+        SpriteSheetBundleBuilder { color, ..self }
     }
 }
 

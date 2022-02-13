@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 use bevy_ingame_tools::sprites;
 
-
 #[derive(Reflect, Default)]
 pub struct Sprites {
     tree: usize,
@@ -49,19 +48,20 @@ pub fn wait_loading(
     }
 }
 
-
-
 pub fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_state(GameState::Loading)
         .insert_resource(Sprites::default())
-        .add_system_set(SystemSet::on_enter(GameState::Loading)
-            .with_system(sprites::loading_startup::<Sprites>))
-        .add_system_set(SystemSet::on_update(GameState::Loading)
-            .with_system(sprites::loading_update::<Sprites>)
-            .with_system(wait_loading))
-        .add_system_set(SystemSet::on_enter(GameState::Ingame)
-            .with_system(setup))
+        .add_system_set(
+            SystemSet::on_enter(GameState::Loading)
+                .with_system(sprites::loading_startup::<Sprites>),
+        )
+        .add_system_set(
+            SystemSet::on_update(GameState::Loading)
+                .with_system(sprites::loading_update::<Sprites>)
+                .with_system(wait_loading),
+        )
+        .add_system_set(SystemSet::on_enter(GameState::Ingame).with_system(setup))
         .run();
 }
