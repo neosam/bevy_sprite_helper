@@ -23,15 +23,6 @@ pub fn loading_startup<T: Reflect>(
 ) {
     let handles = SpriteGraphicsHandles {
         sprites: if let ReflectRef::Struct(reflect_struct) = handle_resource.reflect_ref() {
-            //let mut result = Vec::with_capacity(reflect_struct.field_len());
-            //for i in 0..reflect_struct.field_len() {
-            //    if reflect_struct.field_at(i).unwrap().type_name() == 0usize.type_name() {
-            //        let field_name = reflect_struct.name_at(i).unwrap().to_string();
-            //        let handle = asset_server.load(&format!("sprites/{field_name}.png"));
-            //        result.push((field_name, handle));
-            //    }
-            //}
-            //result
             (0..).zip(reflect_struct.iter_fields())
                 .filter(|(_, reflect)| reflect.type_name() == 0usize.type_name())
                 .map(|(i, _)| reflect_struct.name_at(i).expect("name_at should not be out of range").to_string())
@@ -42,6 +33,7 @@ pub fn loading_startup<T: Reflect>(
             Vec::new()
         }
     };
+    bevy::log::info!("Loading {} sprites", handles.sprites.len());
     commands.insert_resource(handles);
     commands.insert_resource(SpriteGraphicsStatus { done: false });
 }
@@ -55,8 +47,11 @@ pub fn loading_update<T: Reflect>(
     mut texture_atlasses: ResMut<Assets<TextureAtlas>>,
     mut status: ResMut<SpriteGraphicsStatus>,
 ) {
-    if asset_server.get_group_load_state(handles.sprites.iter().map(|(_, handle)| handle.id))
-            == LoadState::Loaded {
+    if LoadState::Loaded == asset_server.get_group_load_state(handles.sprites.iter().map(|(_, handle)| handle.id))
+            && !handles.sprites.is_empty() {
+        bevy::log::info!("{} assets are loaded", handles.sprites.len());
+
+        bevy::log::info!("Create texture atlas");
         let mut texture_atlas_builder = TextureAtlasBuilder::default();                
         for handle in handles.sprites.iter().map(|(_, handle)| handle) {
             let texture = textures.get(handle).expect("Texture asset not found");
