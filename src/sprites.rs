@@ -3,6 +3,7 @@ use bevy::{
     prelude::*,
     reflect::{ReflectMut, ReflectRef},
 };
+use crate::animation;
 
 pub struct SpriteGraphicsHandles {
     sprites: Vec<(String, Handle<Image>)>,
@@ -93,6 +94,10 @@ pub fn loading_update<T: Reflect>(
                 field.apply(&texture_index);
             }
         }
+
+        let sprite_animation_store = animation::generate_sprite_animation_store(handle_resource.as_ref());
+        commands.insert_resource(sprite_animation_store);
+
         let texture_atlas = texture_atlasses.add(texture_atlas);
         commands.insert_resource(TextureAtlasHolder { texture_atlas });
         handles.sprites.clear();

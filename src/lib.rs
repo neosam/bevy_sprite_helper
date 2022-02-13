@@ -4,6 +4,7 @@ use bevy::prelude::*;
 pub mod sprites;
 pub mod spritesheetbuilder;
 pub mod state;
+pub mod animation;
 
 fn wait_loading(
     status: Res<sprites::SpriteGraphicsStatus>,
@@ -29,6 +30,10 @@ impl<SPRITES: Reflect> Plugin for BevyIngameTools<SPRITES> {
                 SystemSet::on_update(state::GameState::Loading)
                     .with_system(sprites::loading_update::<SPRITES>)
                     .with_system(wait_loading),
+            )
+            .add_system_set(
+                SystemSet::on_update(state::GameState::Ingame)
+                    .with_system(animation::sprite_animation_system)
             );
     }
 }
