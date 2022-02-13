@@ -57,61 +57,36 @@ impl<TextureAtlasParameter, IndexParameter> SpriteSheetBundleBuilder<TextureAtla
 
     pub fn transform(self, transform: Transform) -> Self {
         SpriteSheetBundleBuilder {
-            texture_atlas: self.texture_atlas,
-            index: self.index,
             transform,
-            flip_x: self.flip_x,
-            flip_y: self.flip_y,
-            custom_size: self.custom_size,
-            color: self.color,
+            ..self
         }
     }
 
     pub fn flip_x(self, flip_x: bool) -> Self {
         SpriteSheetBundleBuilder {
-            texture_atlas: self.texture_atlas,
-            index: self.index,
-            transform: self.transform,
             flip_x,
-            flip_y: self.flip_y,
-            custom_size: self.custom_size,
-            color: self.color,
+            ..self
         }
     }
 
     pub fn flip_y(self, flip_y: bool) -> Self {
         SpriteSheetBundleBuilder {
-            texture_atlas: self.texture_atlas,
-            index: self.index,
-            transform: self.transform,
-            flip_x: self.flip_x,
             flip_y,
-            custom_size: self.custom_size,
-            color: self.color,
+            ..self
         }
     }
 
     pub fn custom_size(self, custom_size: impl Into<Option<Vec2>>) -> Self {
         SpriteSheetBundleBuilder {
-            texture_atlas: self.texture_atlas,
-            index: self.index,
-            transform: self.transform,
-            flip_x: self.flip_x,
-            flip_y: self.flip_y,
             custom_size: custom_size.into(),
-            color: self.color,
+            ..self
         }
     }
 
     pub fn color(self, color: Color) -> Self {
         SpriteSheetBundleBuilder {
-            texture_atlas: self.texture_atlas,
-            index: self.index,
-            transform: self.transform,
-            flip_x: self.flip_x,
-            flip_y: self.flip_y,
-            custom_size: self.custom_size,
             color,
+            ..self
         }
     }
 }
