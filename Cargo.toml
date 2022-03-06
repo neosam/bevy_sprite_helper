@@ -1,5 +1,5 @@
 [package]
-name = "bevy-ingame-tools"
+name = "bevy-sprite-helper"
 version = "0.1.0"
 edition = "2021"
 

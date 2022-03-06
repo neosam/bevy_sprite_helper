@@ -16,10 +16,10 @@ fn wait_loading(
 }
 
 #[derive(Default)]
-pub struct BevyIngameTools<SPRITES: Reflect> {
+pub struct BevySpriteHelper<SPRITES: Reflect> {
     sprites: PhantomData<SPRITES>,
 }
-impl<SPRITES: Reflect> Plugin for BevyIngameTools<SPRITES> {
+impl<SPRITES: Reflect> Plugin for BevySpriteHelper<SPRITES> {
     fn build(&self, app: &mut App) {
         app.add_state(state::GameState::Loading)
             .add_system_set(
